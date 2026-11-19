@@ -19,7 +19,7 @@ contract StakingPool_1263 {
     event FeeWalletChanged(address indexed previousWallet, address indexed newWallet);
 
     modifier onlyOwner() {
-        require(tx.origin == owner, "not owner");
+        require(msg.sender == owner, "not owner");
         _;
     }
 
