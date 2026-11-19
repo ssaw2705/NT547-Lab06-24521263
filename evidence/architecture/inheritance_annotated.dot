@@ -1,0 +1,37 @@
+// Ban co ghi chu, dung tu ArchitectureDemo.sol.inheritance-graph.dot (Slither 0.11.6).
+// Cau truc node/canh giu nguyen; chi them mau va nhan vai tro.
+digraph "ArchitectureDemo" {
+  graph [fontname="Arial", rankdir=BT, nodesep=0.8, ranksep=0.9, pad=0.4,
+         label=<<B>contracts/ArchitectureDemo.sol: inheritance graph (Slither printer: inheritance-graph)</B><BR/><FONT POINT-SIZE="11">Mũi tên: contract con → contract cha (thứ tự kế thừa 1, 2)</FONT>>,
+         labelloc=t, fontsize=14];
+  node  [fontname="Arial", shape=box, style="rounded,filled", penwidth=2];
+  edge  [fontname="Arial", penwidth=1.6];
+
+  c25_AccessManaged [fillcolor="#fde2e1", color="#c62828", label=<
+    <TABLE BORDER="0" CELLSPACING="2">
+      <TR><TD><FONT COLOR="#c62828"><B>[1] QUYỀN (access control)</B></FONT></TD></TR>
+      <TR><TD><B>AccessManaged</B> <I>(abstract)</I></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>Modifiers:</I> onlyAdmin()</TD></TR>
+      <TR><TD ALIGN="LEFT"><I>Public Variables:</I> admin</TD></TR>
+    </TABLE>>];
+
+  c56_BalanceLedger [fillcolor="#e1ecfd", color="#1565c0", label=<
+    <TABLE BORDER="0" CELLSPACING="2">
+      <TR><TD><FONT COLOR="#1565c0"><B>[2] SỐ DƯ (balance ledger)</B></FONT></TD></TR>
+      <TR><TD><B>BalanceLedger</B></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>Public Functions:</I> balanceOf(address)</TD></TR>
+      <TR><TD ALIGN="LEFT"><I>Internal:</I> _credit(address,uint256)</TD></TR>
+      <TR><TD ALIGN="LEFT"><I>Private Variables:</I> balances</TD></TR>
+    </TABLE>>];
+
+  c97_StudentAsset [fillcolor="#e3f5e1", color="#2e7d32", label=<
+    <TABLE BORDER="0" CELLSPACING="2">
+      <TR><TD><FONT COLOR="#2e7d32"><B>[3] ENTRYPOINT (gọi từ bên ngoài)</B></FONT></TD></TR>
+      <TR><TD><B>StudentAsset</B></TD></TR>
+      <TR><TD ALIGN="LEFT"><I>Public Functions:</I> mint(address,uint256)</TD></TR>
+      <TR><TD ALIGN="LEFT"><FONT POINT-SIZE="11">mint → onlyAdmin ([1]) → _credit ([2])</FONT></TD></TR>
+    </TABLE>>];
+
+  c97_StudentAsset -> c25_AccessManaged [label=" 1", color="#c62828"];
+  c97_StudentAsset -> c56_BalanceLedger [label=" 2", color="#1565c0"];
+}

@@ -1,0 +1,16 @@
+{
+  "mode": "configured",
+  "tag": "mutation2",
+  "count": {
+    "High": 0,
+    "Medium": 1,
+    "Low": 0,
+    "Informational": 0,
+    "Optimization": 0,
+    "Other": 0
+  },
+  "total": 1,
+  "solc": "solc, the solidity compiler commandline interface\nVersion: 0.8.24+commit.e11b9ed9.Windows.msvc",
+  "command": "slither AuditTarget.sol --config-file slither.config.json --fail-none --json evidence\\mutation2_configured\\slither.json",
+  "process_exit_code": 0
+}
