@@ -42,7 +42,6 @@ contract StakingPool_1263 {
     }
 
     function ownerWithdraw(uint256 amount) external onlyOwner {
-        require(tx.origin == owner, "not owner");
         (bool ok, ) = payable(owner).call{value: amount}("");
         require(ok, "withdraw failed");
     }
