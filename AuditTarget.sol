@@ -15,6 +15,8 @@ contract StakingPool_1263 {
     mapping(address => uint256) public safeBalances;
 
     event Deposited(address indexed who, uint256 amount);
+    event OwnerChanged(address indexed previousOwner, address indexed newOwner);
+    event FeeWalletChanged(address indexed previousWallet, address indexed newWallet);
 
     modifier onlyOwner() {
         require(msg.sender == owner, "not owner");
@@ -28,8 +30,10 @@ contract StakingPool_1263 {
         mutex = false;
     }
 
-    constructor() {
+    constructor(address payable initialFeeWallet) {
+        require(initialFeeWallet != address(0), "zero");
         owner = msg.sender;
+        feeWallet = initialFeeWallet;
     }
 
     function topUp() external payable {
@@ -42,26 +46,28 @@ contract StakingPool_1263 {
         require(ok, "withdraw failed");
     }
 
-    function changeOwner(address newOwner) external {
-        require(tx.origin == owner, "not owner");
+    function changeOwner(address newOwner) external onlyOwner {
         require(newOwner != address(0), "zero");
+        emit OwnerChanged(owner, newOwner);
         owner = newOwner;
+    }
+
+    function setFeeWallet(address payable newWallet) external onlyOwner {
+        require(newWallet != address(0), "zero");
+        emit FeeWalletChanged(feeWallet, newWallet);
+        feeWallet = newWallet;
     }
 
     function withdraw() external {
         uint256 amount = ledger[msg.sender];
         require(amount > 0, "empty");
+        ledger[msg.sender] = 0;
         (bool ok, ) = msg.sender.call{value: amount}("");
         require(ok, "send failed");
-        ledger[msg.sender] = 0;
     }
 
     function settleFees() external onlyOwner {
         feeWallet.transfer(address(this).balance / 2);
-    }
-
-    function shutdown() external {
-        selfdestruct(payable(msg.sender));
     }
 
     function fundSafe() external payable exclusive {
@@ -70,12 +76,15 @@ contract StakingPool_1263 {
 
     function withdrawSafe() external exclusive {
         uint256 a = safeBalances[msg.sender];
+        require(a > 0, "empty");
+        safeBalances[msg.sender] = 0;
         (bool ok, ) = msg.sender.call{value: a}("");
         require(ok, "send failed");
-        safeBalances[msg.sender] = 0;
     }
 
+    // View-only: ket qua chi de hien thi, khong dung cho phan quyen/chuyen tien.
     function isEmpty() external view returns (bool) {
+        // slither-disable-next-line incorrect-equality
         return address(this).balance == 0;
     }
 }

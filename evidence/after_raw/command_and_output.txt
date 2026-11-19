@@ -1,0 +1,25 @@
+COMMAND: slither AuditTarget.sol --config-file config/slither.raw.json --fail-none --json evidence\after_raw\slither.json
+SLITHER_VERSION:
+0.11.6
+
+SOLC_VERSION:
+solc, the solidity compiler commandline interface
+Version: 0.8.24+commit.e11b9ed9.Windows.msvc
+
+
+Detector: low-level-calls
+Low level call in StakingPool_1263.ownerWithdraw(uint256) (AuditTarget.sol#44-47):
+	- (ok,None) = address(owner).call{value: amount}() (AuditTarget.sol#45)
+Low level call in StakingPool_1263.withdraw() (AuditTarget.sol#61-67):
+	- (ok,None) = msg.sender.call{value: amount}() (AuditTarget.sol#65)
+Low level call in StakingPool_1263.withdrawSafe() (AuditTarget.sol#77-83):
+	- (ok,None) = msg.sender.call{value: a}() (AuditTarget.sol#81)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+
+Detector: naming-convention
+Contract StakingPool_1263 (AuditTarget.sol#10-90) is not in CapWords
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+AuditTarget.sol analyzed (2 contracts with 102 detectors), 4 result(s) found
+Multiple frameworks detected: solc, Solc-json. Using solc (highest priority). Use --compile-force-framework to override.
+'solc --version' running
+'solc AuditTarget.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes --allow-paths .,D:\thblockchain\lab06\Lab06_SinhVien' running
