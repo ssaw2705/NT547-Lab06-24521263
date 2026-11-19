@@ -1,0 +1,16 @@
+{
+  "mode": "raw",
+  "tag": "before",
+  "count": {
+    "High": 4,
+    "Medium": 2,
+    "Low": 0,
+    "Informational": 4,
+    "Optimization": 1,
+    "Other": 0
+  },
+  "total": 11,
+  "solc": "solc, the solidity compiler commandline interface\nVersion: 0.8.24+commit.e11b9ed9.Windows.msvc",
+  "command": "slither AuditTarget.sol --config-file config/slither.raw.json --fail-none --json evidence\\before_raw\\slither.json",
+  "process_exit_code": 0
+}

@@ -1,0 +1,7 @@
+slither contracts/ArchitectureDemo.sol --print inheritance-graph --config-file config/slither.raw.json --fail-none
+Multiple frameworks detected: solc, Solc-json. Using solc (highest priority). Use --compile-force-framework to override.
+'solc --version' running
+'solc contracts/ArchitectureDemo.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes --allow-paths .,D:\thblockchain\lab06\Lab06_SinhVien\contracts' running
+INFO:Printers:Inheritance Graph: contracts/ArchitectureDemo.sol.inheritance-graph.dot
+
+INFO:Slither:contracts/ArchitectureDemo.sol analyzed (3 contracts)

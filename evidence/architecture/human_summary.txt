@@ -1,0 +1,22 @@
+slither contracts/ArchitectureDemo.sol --print human-summary --config-file config/slither.raw.json --fail-none
+Multiple frameworks detected: solc, Solc-json. Using solc (highest priority). Use --compile-force-framework to override.
+'solc --version' running
+'solc contracts/ArchitectureDemo.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes --allow-paths .,D:\thblockchain\lab06\Lab06_SinhVien\contracts' running
+INFO:Printers:
+Compiled with solc
+Total number of contracts in source files: 3
+Source lines of code (SLOC) in source files: 23
+Number of  assembly lines: 0
+Number of optimization issues: 1
+Number of informational issues: 0
+Number of low issues: 0
+Number of medium issues: 0
+Number of high issues: 0
+
+
++--------------+-------------+------+------------+--------------+----------+
+| Name         | # functions | ERCS | ERC20 info | Complex code | Features |
++--------------+-------------+------+------------+--------------+----------+
+| StudentAsset | 4           |      |            | No           |          |
++--------------+-------------+------+------------+--------------+----------+
+INFO:Slither:contracts/ArchitectureDemo.sol analyzed (3 contracts)

@@ -1,0 +1,69 @@
+COMMAND: slither AuditTarget.sol --config-file slither.config.json --fail-none --json evidence\before_configured\slither.json
+SLITHER_VERSION:
+0.11.6
+
+SOLC_VERSION:
+solc, the solidity compiler commandline interface
+Version: 0.8.24+commit.e11b9ed9.Windows.msvc
+
+
+Detector: reentrancy-eth
+Reentrancy in StakingPool_1263.withdraw() (AuditTarget.sol#51-57):
+	External calls:
+	- (ok,None) = msg.sender.call{value: amount}() (AuditTarget.sol#54)
+	State variables written after the call(s):
+	- ledger[msg.sender] = 0 (AuditTarget.sol#56)
+	StakingPool_1263.ledger (AuditTarget.sol#12) can be used in cross function reentrancies:
+	- StakingPool_1263.ledger (AuditTarget.sol#12)
+	- StakingPool_1263.topUp() (AuditTarget.sol#35-38)
+	- StakingPool_1263.withdraw() (AuditTarget.sol#51-57)
+Reentrancy in StakingPool_1263.withdrawSafe() (AuditTarget.sol#71-76):
+	External calls:
+	- (ok,None) = msg.sender.call{value: a}() (AuditTarget.sol#73)
+	State variables written after the call(s):
+	- safeBalances[msg.sender] = 0 (AuditTarget.sol#75)
+	StakingPool_1263.safeBalances (AuditTarget.sol#15) can be used in cross function reentrancies:
+	- StakingPool_1263.fundSafe() (AuditTarget.sol#67-69)
+	- StakingPool_1263.safeBalances (AuditTarget.sol#15)
+	- StakingPool_1263.withdrawSafe() (AuditTarget.sol#71-76)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+
+Detector: suicidal
+StakingPool_1263.shutdown() (AuditTarget.sol#63-65) allows anyone to destruct the contract
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#suicidal
+
+Detector: uninitialized-state
+StakingPool_1263.feeWallet (AuditTarget.sol#13) is never initialized. It is used in:
+	- StakingPool_1263.settleFees() (AuditTarget.sol#59-61)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-state-variables
+
+Detector: incorrect-equality
+StakingPool_1263.isEmpty() (AuditTarget.sol#78-80) uses a dangerous strict equality:
+	- address(this).balance == 0 (AuditTarget.sol#79)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+
+Detector: tx-origin
+StakingPool_1263.changeOwner(address) (AuditTarget.sol#45-49) uses tx.origin for authorization: require(bool,string)(tx.origin == owner,not owner) (AuditTarget.sol#46)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-usage-of-txorigin
+
+Detector: constable-states
+StakingPool_1263.feeWallet (AuditTarget.sol#13) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+AuditTarget.sol analyzed (2 contracts with 64 detectors), 7 result(s) found
+Multiple frameworks detected: solc, Solc-json. Using solc (highest priority). Use --compile-force-framework to override.
+'solc --version' running
+'solc AuditTarget.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes --allow-paths .,D:\thblockchain\lab06\Lab06_SinhVien' running
+Compilation warnings/errors on AuditTarget.sol:
+Warning: "selfdestruct" has been deprecated. Note that, starting from the Cancun hard fork, the underlying opcode no longer deletes the code and data associated with an account and only transfers its Ether to the beneficiary, unless executed in the same transaction in which the contract was created (see EIP-6780). Any use in newly deployed contracts is strongly discouraged even if the new behavior is taken into account. Future changes to the EVM might further reduce the functionality of the opcode.
+
+  --> AuditTarget.sol:64:9:
+
+   |
+
+64 |         selfdestruct(payable(msg.sender));
+
+   |         ^^^^^^^^^^^^
+
+
+
+

@@ -1,0 +1,10 @@
+digraph "" {
+c25_AccessManaged[shape="box"label=< <TABLE border="0"><TR><TD align="center"><B>AccessManaged</B></TD></TR><TR><TD align="left"><I>Modifiers:</I></TD></TR><TR><TD align="left">    onlyAdmin()</TD></TR><TR><TD align="left"><I>Public Variables:</I></TD></TR><TR><TD align="left">    admin</TD></TR></TABLE> >];
+
+c56_BalanceLedger[shape="box"label=< <TABLE border="0"><TR><TD align="center"><B>BalanceLedger</B></TD></TR><TR><TD align="left"><I>Public Functions:</I></TD></TR><TR><TD align="left">    balanceOf(address)</TD></TR><TR><TD align="left"><I>Private Functions:</I></TD></TR><TR><TD align="left">    _credit(address,uint256)</TD></TR><TR><TD align="left"><I>Private Variables:</I></TD></TR><TR><TD align="left">    balances</TD></TR></TABLE> >];
+
+c97_StudentAsset -> c25_AccessManaged [ label="1" ];
+c97_StudentAsset -> c56_BalanceLedger [ label="2" ];
+c97_StudentAsset[shape="box"label=< <TABLE border="0"><TR><TD align="center"><B>StudentAsset</B></TD></TR><TR><TD align="left"><I>Public Functions:</I></TD></TR><TR><TD align="left">    mint(address,uint256)</TD></TR></TABLE> >];
+
+}
